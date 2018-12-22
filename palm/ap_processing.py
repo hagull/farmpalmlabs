@@ -107,8 +107,74 @@ class AP3_1_CONTROL(AP3_1):
             protocol = self.frame_header + payload_type + value1
         return protocol
     # payload type = 0x02 : control group set the info requests
-    def group_set(self):
-        pass
+    def group_set(self, value1, value2, value3, value4, value5, value6=None, value7=None, value8=None, payload_type = 2):
+        payload_type = hex(payload_type)[2:].rjust(2, '0')
+        value1 = hex(value1)[2:].rjust(2, '0')
+        protocol = ''
+        if value1=='01':
+            value2 = hex(value2)[2:].rjust(2, '0')
+            if value2=='01':
+                value3 = hex(value3)[2:].rjust(2, '0')
+                if value3 =='01':
+                    value4 = hex(value4)[2:].rjust(2, '0')
+                    value5 = hex(value5)[2:].rjust(2, '0')
+                    if value5 == '01':
+                        value6 = value6.rjust(2, '0')
+                        protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5 + value6
+                    elif value5 == '02':
+                        value6 = value6.rjust(196, '0')
+                        protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5 + value6
+                    elif value5 == '03':
+                        value6 = value6.rjust(54, '0')
+                        protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5 + value6
+                elif ((value3 =='02') | (value3 =='03') | (value3 =='04')):
+                    value4 = hex(value4)[2:].rjust(2, '0')
+                    value5 = value5.rjsut(28, '0')
+                    protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5
+            elif value2=='02':
+                value3 = hex(value3).rjust(2, '0')
+                value4 = hex(value4).rjust(2, '0')
+                if value3 == '01':
+                    value5 = value5.rjust(128, '0')
+                    protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5
+                elif (value3 =='02') | (value3 == '03'):
+                    value5 = value5.rjust(96, '0')
+                    protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5
+                elif value3 == '04':
+                    value5 = value5.rjust(192, '0')
+                    protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5
+                elif value3 == '05':
+                    value5 = value5.rjust(162, '0')
+                    protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5
+            elif value2=='03':
+                value3 = hex(value3)[2:].rjust(2, '0')
+                if value3 == '01':
+                    value4 = hex(value4)[2:].rjust(2, '0')
+                    value5 = hex(value5)[2:].rjust(2, '0')
+                    if value5 == '01':
+                        value6 = hex(value6)[2:].rjust(2, '0')
+                        protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5 + value6
+                    elif value5 == '02':
+                        value6 = hex(value6)[2:].rjust(2, '0')
+                        if value6 =='01':
+                            value7 = hex(value7)[2:].rjust(2, '0')
+                            protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5 + value6 + value7
+                        elif value6 == '02':
+                            value7 = hex(value7)[2:].rjust(2, '0')
+                            value8 = value8.rjust(24, '0') # 임시 ID 의 byte범위에 따라 달라짐
+                            protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8
+                elif (value3 == '02') | (value3 == '03') | (value3 == '04'):
+                    value4 = hex(value4)[2:].rjust(2, '0')
+                    value5 = hex(value5)[2:].rjust(2, '0')
+                    value6 = hex(value6)[2:].rjust(2, '0')
+                    protocol = self.frame_header + payload_type + value1 + value2 + value3 + value4 + value5 + value6
+        elif value1 == '02':
+            pass
+        elif value1 == '03':
+            pass
+        else:
+            pass
+        return protocol
 # command type = 0x04 : Log list requests
 class AP3_1_LOG(AP3_1):
     def __init__(self, command_type=2, version=1, frame_type=0, security=0, sequence_number=0):
