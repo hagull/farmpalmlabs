@@ -199,3 +199,7 @@ class WeatherInfo(models.Model):
     humd_value = models.FloatField()
     wind_dir_value = models.FloatField()
     wind_spd_value = models.FloatField()
+# Sms passcode model
+class SMSPassCode(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    passcode = models.CharField(max_length=10)

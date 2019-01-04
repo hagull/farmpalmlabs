@@ -40,34 +40,21 @@ class FarmViewSet(viewsets.ModelViewSet):
         qs = qs.filter(user=self.request.user)
         return qs
 
-#class FindUserPasswordView(APIView):
-#    permission_classes = [AllowAny]
-#    def get(self, request, format=None):
-#        #username='a'
-#        #phone='b'
-#        #data = {'username':username, 'phone':phone}
-#        serializer = FindUserPasswordSerializer(data=request.data)
-#        serializer.is_valid()
-#        return Response(serializer.validated_data)
-#    def post(self, request, *args, **kwargs):
-#        serializer = FindUserPasswordSerializer(data=request.data)
-#        serializer.is_valid()
-#        #username= serializer.validated_data.get("username")
-#        #phone = serializer.validated_data.get("phone")
-#        #self.object = get_object_or_404(User, username=username, phone=phone)
-#        return Response(serializer.validated_data, status=status.HTTP_200_OK)
-
 class FindPasswordTokenView(APIView):
     permission_classes = [AllowAny]
     def get_object(self, request):
         data = request.data
         user = get_object_or_404(User, username=data['username'], phone=data['phone'])
-        token = Token.objects.get_or_create(user = user)[0]
-        return token
+        return user
     def get(self, request):
         return Response(data="None")
     def post(self, request):
-        token = self.get_object(request)
+        data = request.data
+        user = self.get_object(request)
+        passcode = get_object_or_404(SMSPassCode ,user=user).passcode
+        if not passcode == data['passcode']:
+            return Response({'Status':'Passcode Error'}, status=status.HTTP_400_BAD_REQUEST)
+        token = Token.objects.get_or_create(user=user)[0]
         token_key = {'key':token.key}
         serializer = FindPasswordTokenSerializer(token, data=token_key)
         if not serializer.is_valid():
@@ -106,6 +93,19 @@ class SetPasswordAtFindView(APIView):
         if serializer.is_valid():
             self.object.set_password(serializer.data.get('new_password'))
             self.object.save()
-            return Response({'set_password_status':'set password'}, status=status.HTTP_200_OK)
+            return Response({'status':'set password'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SMSPasscodeView(APIView):
+    permission_classes = [AllowAny]
+    def get_object(self, request):
+        data = request.data
+        user = get_object_or_404(User, username=data['username'], phone=data['phone'])
+        return user
+    def get(self, request):
+        return Response(data="None")
+    def post(self, request):
+        # 이 공간에서 Passcode를 생성 -> DB저장 -> SMS 송신이 이루어진다.
+        pass
+    pass
 # Create your views here.

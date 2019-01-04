@@ -33,3 +33,7 @@ class SetPasswordSerializer(serializers.Serializer):
     def validate_new_password(self, value):
         validate_password(value)
         return value
+# SMS 메세지 passcode 저장 및 송신을 위한 api
+class SMSPasscodeSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    phone = serializers.CharField()
