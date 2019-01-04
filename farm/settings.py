@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_extensions',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
@@ -51,7 +52,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     'accounts',
     'palm',
-
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
