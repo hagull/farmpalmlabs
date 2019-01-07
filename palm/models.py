@@ -91,7 +91,7 @@ class ControlOpenAutoGroup(models.Model):
     om_otemp = models.FloatField()
     om_ctemp = models.FloatField()
 # normal_control_option 모델로 1개의 제어그룹에 최대 1개 등록될수있다.
-class ControlNormalOption(models.Model):
+class ControlFMotorOption(models.Model):
     control_group = models.OneToOneField('ControlGroup', on_delete=models.PROTECT)
     # flow_motor_option - fm_option
     fm_id = models.CharField(max_length=6)
@@ -101,6 +101,8 @@ class ControlNormalOption(models.Model):
     fm_etemp = models.FloatField() # 이하 end temp
     fm_op_time = models.IntegerField() # 단위 : 분
     fm_bk_time = models.IntegerField() # 단위 : 분
+class ControlVMotorOption(models.Model):
+    control_group = models.OneToOneField('ControlGroup', on_delete=models.PROTECT)
     # ventilation_motor_option
     vm_id = models.CharField(max_length=6)
     vm_stime = models.CharField(max_length=4)  # 이하 start time
@@ -109,14 +111,18 @@ class ControlNormalOption(models.Model):
     vm_etemp = models.FloatField()  # 이하 end temp
     vm_op_time = models.IntegerField()  # 단위 : 분
     vm_bk_time = models.IntegerField()  # 단위 : 분
+class ControlEtcOption(models.Model):
+    control_group = models.ForeignKey('ControlGroup', on_delete=models.PROTECT)
     # ETC_actuator_option
     ea_id = models.CharField(max_length=6)
     ea_stime = models.CharField(max_length=4)  # 이하 start time
     ea_etime = models.CharField(max_length=4)  # 이하 end time
+    ea_sensor_id = models.CharField(max_length=6)
     ea_stemp = models.FloatField()  # 이하 start temp
     ea_etemp = models.FloatField()  # 이하 end temp
     ea_op_time = models.IntegerField()  # 단위 : 분
     ea_bk_time = models.IntegerField()  # 단위 : 분
+
 class SensorInfoOrValue(models.Model):
     control_group = models.ForeignKey('ControlGroup', on_delete=models.PROTECT)
     # temp_id
