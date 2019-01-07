@@ -54,13 +54,14 @@ class FindPasswordTokenView(APIView):
         passcode = get_object_or_404(SMSPassCode ,user=user).passcode
         if not passcode == data['passcode']:
             return Response({'Status':'Passcode Error'}, status=status.HTTP_400_BAD_REQUEST)
-        token = Token.objects.get_or_create(user=user)[0]
-        token_key = {'key':token.key}
-        serializer = FindPasswordTokenSerializer(token, data=token_key)
-        if not serializer.is_valid():
-            return Response('Error', status=404)
+        token_tuple = Token.objects.all().get_or_create(user=user)
+        token = token_tuple[0]
+        token_empty = token_tuple[1]
+        serializer = FindPasswordTokenSerializer(token)
+        if token_empty:
+            return Response('Error', status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(serializer.data, status=200)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
 class SetPasswordView(APIView):
     permission_classes = [IsAuthenticated]
@@ -95,7 +96,6 @@ class SetPasswordAtFindView(APIView):
             self.object.save()
             return Response({'status':'set password'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class SMSPasscodeView(APIView):
     permission_classes = [AllowAny]
     def get_object(self, request):
@@ -107,5 +107,24 @@ class SMSPasscodeView(APIView):
     def post(self, request):
         # 이 공간에서 Passcode를 생성 -> DB저장 -> SMS 송신이 이루어진다.
         pass
-    pass
+
+class RegisterFarmView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    def get_object(self, request):
+        user = self.request.user
+        return user
+    def get(self, request):
+        return Response(data="only post request" ,status = status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        user = self.get_object(request)
+        data = request.data # farn  모델 정보, gcg_id, extra_info
+        extra_info = data.pop('extra_info')
+        gcg_id = data.pop('gcg_id')
+        farm = Farm.objects.create(user=user, **data)
+        farm.save()
+        gcg = Gcg.objects.create(farm=farm, serial_num=gcg_id)
+        gcg.save()
+        serializer = FarmSerializer(farm)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 # Create your views here.

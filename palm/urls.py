@@ -10,5 +10,6 @@ urlpatterns = [
     path('find-password/', FindPasswordTokenView.as_view()),
     path('set-password/',SetPasswordView.as_view()),
     path('find-set-password/', SetPasswordAtFindView.as_view()),
-    path('sms-api', SMSPasscodeView.as_view()),
+    path('sms-api/', SMSPasscodeView.as_view()),
+    path('farm-register/', RegisterFarmView.as_view()),
 ]

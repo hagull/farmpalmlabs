@@ -15,7 +15,7 @@ class SensorInfoOrValueSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['username', 'email']
 class FarmSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
@@ -37,3 +37,9 @@ class SetPasswordSerializer(serializers.Serializer):
 class SMSPasscodeSerializer(serializers.Serializer):
     username = serializers.CharField()
     phone = serializers.CharField()
+
+class RegisterFarmSerializer(serializers.Serializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    gcg_id = serializers.CharField(required=False)
+    # 동의 번호( 1동 2동 3동 ... N동 ) + 개폐기 그룹의 번호 + 개폐기 그룹의 CustomName
+    extra_info = serializers.CharField(required=False)
