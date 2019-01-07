@@ -70,7 +70,7 @@ class ControlOpenGroup(models.Model):
         ('02', '비활성화'),
     )
     control_group = models.ForeignKey('ControlGroup', on_delete=models.PROTECT)
-    og_name = models.IntegerField() # 개폐기 그룹번호
+    og_name = models.IntegerField(default=0) # 개폐기 그룹번호
     og_custom_name = models.CharField(max_length=50)
     og_mode = models.CharField(choices=ACTIVATE_TYPE, max_length=2, blank=True)
     og_tot = models.IntegerField(default=0)

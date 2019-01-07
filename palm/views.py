@@ -125,6 +125,28 @@ class RegisterFarmView(APIView):
         farm.save()
         gcg = Gcg.objects.create(farm=farm, serial_num=gcg_id)
         gcg.save()
+        extra_info_list = extra_info.split('/')
+        for i in extra_info_list:
+            step1=i.split('.')
+            control_g_name = int(step1[0])
+            control_og_lm_id = step1[1]
+            control_og_rm_id = step1[2]
+            control_og_custom_name = step1[3]
+            temp = ControlGroup.objects.get_or_create(gcg=gcg, name=control_g_name)
+            control_group = temp[0]
+            state = temp[1]
+            if state:
+                control_group.save()
+            temp = ControlOpenOption.objects.get_or_create(control_group=control_group)
+            control_open_option = temp[0]
+            state = temp[1]
+            if state:
+                control_open_option.save()
+            temp = ControlOpenGroup.objects.get_or_create(control_group=control_group, og_lm_id=control_og_lm_id, og_rm_id=control_og_rm_id, og_custom_name=control_og_custom_name)
+            control_open_group = temp[0]
+            state = temp[1]
+            if state:
+                control_open_group.save()
         serializer = FarmSerializer(farm)
         return Response(serializer.data, status=status.HTTP_200_OK)
 # Create your views here.
