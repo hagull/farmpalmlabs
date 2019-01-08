@@ -15,5 +15,4 @@ class ControlOpenOptionAdmin(admin.ModelAdmin):
 @admin.register(models.ControlOpenGroup)
 class ControlOpenGroupAdmin(admin.ModelAdmin):
     pass
-
 # Register your models here.

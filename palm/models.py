@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
-
+import datetime
+from django.utils.timezone import now, make_aware
 # Create your models here.
 
 class Farm(models.Model):
@@ -52,7 +53,6 @@ class ControlOpenOption(models.Model):
     motor_num = models.IntegerField(default=0)
     # open_group_info - og_info
     og_num = models.IntegerField(default=0)
-        # 개폐기 그룹에 개폐기 옵션 외래키 부여
     # open_motor_option - om_option
     om_mode = models.CharField(choices=MODE_TYPE, max_length=2, blank=True)
     om_delay_time = models.IntegerField(default=0) # 단위 : 초
@@ -73,10 +73,16 @@ class ControlOpenGroup(models.Model):
     og_name = models.IntegerField(default=0) # 개폐기 그룹번호
     og_custom_name = models.CharField(max_length=50)
     og_mode = models.CharField(choices=ACTIVATE_TYPE, max_length=2, blank=True)
-    og_tot = models.IntegerField(default=0)
-    og_ot = models.IntegerField(default=0)
+    og_lm_tot = models.IntegerField(default=0)
+    og_rm_tot = models.IntegerField(default=0)
+    og_lm_ot = models.IntegerField(default=0)
+    og_rm_ot = models.IntegerField(default=0)
     og_lm_id = models.CharField(max_length=6, blank=True)
+    og_lm_state = models.CharField(max_length=50)
+    og_lm_option = models.CharField(max_length=50)
     og_rm_id = models.CharField(max_length=6, blank=True)
+    og_rm_state = models.CharField(max_length=50)
+    og_rm_option = models.CharField(max_length=50)
 # open_control 주기 그룹으로 한개 option에 최대 6개의 주기그룹 등록가능
 class ControlOpenAutoGroup(models.Model):
     ACTIVATE_TYPE = (
@@ -92,9 +98,14 @@ class ControlOpenAutoGroup(models.Model):
     om_ctemp = models.FloatField()
 # normal_control_option 모델로 1개의 제어그룹에 최대 1개 등록될수있다.
 class ControlFMotorOption(models.Model):
+    MODE_TYPE = (
+        ('01', '자동'),
+        ('02', '수동'),
+    )
     control_group = models.OneToOneField('ControlGroup', on_delete=models.PROTECT)
     # flow_motor_option - fm_option
     fm_id = models.CharField(max_length=6)
+    fm_op_mode = models.CharField(choices=MODE_TYPE, max_length=2)
     fm_stime = models.CharField(max_length=4) # 이하 start time
     fm_etime = models.CharField(max_length=4) # 이하 end time
     fm_stemp = models.FloatField() # 이하 start temp
@@ -102,9 +113,14 @@ class ControlFMotorOption(models.Model):
     fm_op_time = models.IntegerField() # 단위 : 분
     fm_bk_time = models.IntegerField() # 단위 : 분
 class ControlVMotorOption(models.Model):
+    MODE_TYPE = (
+        ('01', '자동'),
+        ('02', '수동'),
+    )
     control_group = models.OneToOneField('ControlGroup', on_delete=models.PROTECT)
     # ventilation_motor_option
     vm_id = models.CharField(max_length=6)
+    vm_op_mode = models.CharField(choices=MODE_TYPE, max_length=2)
     vm_stime = models.CharField(max_length=4)  # 이하 start time
     vm_etime = models.CharField(max_length=4)  # 이하 end time
     vm_stemp = models.FloatField()  # 이하 start temp
@@ -112,9 +128,14 @@ class ControlVMotorOption(models.Model):
     vm_op_time = models.IntegerField()  # 단위 : 분
     vm_bk_time = models.IntegerField()  # 단위 : 분
 class ControlEtcOption(models.Model):
+    MODE_TYPE = (
+        ('01', '자동'),
+        ('02', '수동'),
+    )
     control_group = models.ForeignKey('ControlGroup', on_delete=models.PROTECT)
     # ETC_actuator_option
     ea_id = models.CharField(max_length=6)
+    ea_op_mode = models.CharField(choices=MODE_TYPE, max_length=2)
     ea_stime = models.CharField(max_length=4)  # 이하 start time
     ea_etime = models.CharField(max_length=4)  # 이하 end time
     ea_sensor_id = models.CharField(max_length=6)
@@ -126,80 +147,105 @@ class ControlEtcOption(models.Model):
 class SensorInfoOrValue(models.Model):
     control_group = models.ForeignKey('ControlGroup', on_delete=models.PROTECT)
     # temp_id
-    temp_id1 = models.CharField(max_length=6)
-    temp_id2 = models.CharField(max_length=6)
-    temp_id3 = models.CharField(max_length=6)
+    temp_num = models.IntegerField()
+    temp_id1 = models.CharField(max_length=6, default='0000')
+    temp_id2 = models.CharField(max_length=6, default='0000')
+    temp_id3 = models.CharField(max_length=6, default='0000')
     # temp_value
     temp_value1 = models.FloatField()
     temp_value2 = models.FloatField()
     temp_value3 = models.FloatField()
+    temp_aver = models.FloatField()
     # humd_id
-    humd_id1 = models.CharField(max_length=6)
-    humd_id2 = models.CharField(max_length=6)
-    humd_id3 = models.CharField(max_length=6)
+    humd_num = models.IntegerField()
+    humd_id1 = models.CharField(max_length=6, default='0000')
+    humd_id2 = models.CharField(max_length=6, default='0000')
+    humd_id3 = models.CharField(max_length=6, default='0000')
     # humd_value
     humd_value1 = models.FloatField()
     humd_value2 = models.FloatField()
     humd_value3 = models.FloatField()
+    humd_aver = models.FloatField()
     # co2_id
-    co2_id1 = models.CharField(max_length=6)
-    co2_id2 = models.CharField(max_length=6)
-    co2_id3 = models.CharField(max_length=6)
+    co2_num = models.IntegerField()
+    co2_id1 = models.CharField(max_length=6, default='0000')
+    co2_id2 = models.CharField(max_length=6, default='0000')
+    co2_id3 = models.CharField(max_length=6, default='0000')
     # co2_value
     co2_value1 = models.FloatField()
     co2_value2 = models.FloatField()
     co2_value3 = models.FloatField()
+    co2_aver = models.FloatField()
     # soil_temp_id
-    soil_temp_id1 = models.CharField(max_length=6)
-    soil_temp_id2 = models.CharField(max_length=6)
-    soil_temp_id3 = models.CharField(max_length=6)
+    soil_temp_num = models.IntegerField()
+    soil_temp_id1 = models.CharField(max_length=6, default='0000')
+    soil_temp_id2 = models.CharField(max_length=6, default='0000')
+    soil_temp_id3 = models.CharField(max_length=6, default='0000')
     # soil_temp_value
     soil_temp_value1 = models.FloatField()
     soil_temp_value2 = models.FloatField()
     soil_temp_value3 = models.FloatField()
+    soil_temp_aver = models.FloatField()
     # soil_humd_id
-    soil_humd_id1 = models.CharField(max_length=6)
-    soil_humd_id2 = models.CharField(max_length=6)
-    soil_humd_id3 = models.CharField(max_length=6)
+    soil_humd_num = models.IntegerField()
+    soil_humd_id1 = models.CharField(max_length=6, default='0000')
+    soil_humd_id2 = models.CharField(max_length=6, default='0000')
+    soil_humd_id3 = models.CharField(max_length=6, default='0000')
     # soil_humd_value
     soil_humd_value1 = models.FloatField()
     soil_humd_value2 = models.FloatField()
     soil_humd_value3 = models.FloatField()
+    soil_humd_aver = models.FloatField()
     # soil_ec_id
-    soil_ec_id1 = models.CharField(max_length=6)
-    soil_ec_id2 = models.CharField(max_length=6)
-    soil_ec_id3 = models.CharField(max_length=6)
+    soil_ec_num = models.IntegerField()
+    soil_ec_id1 = models.CharField(max_length=6, default='0000')
+    soil_ec_id2 = models.CharField(max_length=6, default='0000')
+    soil_ec_id3 = models.CharField(max_length=6, default='0000')
     # soil_ec_value
     soil_ec_value1 = models.FloatField()
     soil_ec_value2 = models.FloatField()
     soil_ec_value3 = models.FloatField()
+    soil_ec_aver = models.FloatField()
     # culture_medium_temp_id
-    culture_medium_temp_id1 = models.CharField(max_length=6)
-    culture_medium_temp_id2 = models.CharField(max_length=6)
-    cultrue_medium_temp_id3 = models.CharField(max_length=6)
+    culture_medium_temp_num = models.IntegerField()
+    culture_medium_temp_id1 = models.CharField(max_length=6, default='0000')
+    culture_medium_temp_id2 = models.CharField(max_length=6, default='0000')
+    cultrue_medium_temp_id3 = models.CharField(max_length=6, default='0000')
     # culture_medium_temp_value
     culture_medium_temp_value1 = models.FloatField()
     culture_medium_temp_value2 = models.FloatField()
     culture_medium_temp_value3 = models.FloatField()
+    culture_medium_temp_aver = models.FloatField()
     # nutrient_solution_ec_id
-    nutrient_solution_ec_id1 = models.CharField(max_length=6)
-    nutrient_solution_ec_id2 = models.CharField(max_length=6)
-    nutrient_solution_ec_id3 = models.CharField(max_length=6)
+    nutrient_solution_ec_num = models.IntegerField()
+    nutrient_solution_ec_id1 = models.CharField(max_length=6, default='0000')
+    nutrient_solution_ec_id2 = models.CharField(max_length=6, default='0000')
+    nutrient_solution_ec_id3 = models.CharField(max_length=6, default='0000')
     # nutrient_solution_ec_value
     nutrient_solution_ec_value1 = models.FloatField()
     nutrient_solution_ec_value2 = models.FloatField()
     nutrient_solution_ec_value3 = models.FloatField()
+    nutrient_solution_ec_aver = models.FloatField()
     # nutrient_solution_ph_id
-    nutrient_solution_ph_id1 = models.CharField(max_length=6)
-    nutrient_solution_ph_id2 = models.CharField(max_length=6)
-    nutrient_solution_ph_id3 = models.CharField(max_length=6)
+    nutrient_solution_ph_num = models.IntegerField()
+    nutrient_solution_ph_id1 = models.CharField(max_length=6, default='0000')
+    nutrient_solution_ph_id2 = models.CharField(max_length=6, default='0000')
+    nutrient_solution_ph_id3 = models.CharField(max_length=6, default='0000')
     # nutrient_solution_ph_value
     nutrient_solution_ph_value1 = models.FloatField()
     nutrient_solution_ph_value2 = models.FloatField()
     nutrient_solution_ph_value3 = models.FloatField()
+    nutrient_solution_ph_aver = models.FloatField()
+
+    test_date = models.DateTimeField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 # 외부기상 info - Gcg에서 외래키 받아옴
 class WeatherInfo(models.Model):
     gcg = models.ForeignKey('Gcg', on_delete=models.PROTECT)
+    # 기상센서 노드 INFO 필드들 추가예정
+    # - 하지만 이걸굳이 다저장할 필요는 없다.
+    # 따라서 기상센서노드정보는 센서노드정보를 받아올때 같이 받고,
+    # 센서노드정보의 db에 기상센서노드와 관련된필드를 추가
     rain_value = models.FloatField()
     temp_value = models.FloatField()
     humd_value = models.FloatField()
