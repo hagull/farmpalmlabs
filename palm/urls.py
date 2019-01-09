@@ -4,6 +4,8 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register('user', UserViewSet)
 router.register('farm', FarmViewSet)
+router.register('sensor-value', SensorValueViewSet)
+router.register('weather-value', WeatherValueViewSet)
 app_name = 'palm'
 urlpatterns = [
     path('', include(router.urls)),

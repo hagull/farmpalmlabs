@@ -149,4 +149,12 @@ class RegisterFarmView(APIView):
                 control_open_group.save()
         serializer = FarmSerializer(farm)
         return Response(serializer.data, status=status.HTTP_200_OK)
+class SensorValueViewSet(viewsets.ModelViewSet):
+    queryset = SensorInfoOrValue.objects.all()
+    serializer_class = SensorValueSerializer
+    permission_classes = [AllowAny]
+class WeatherValueViewSet(viewsets.ModelViewSet):
+    queryset = WeatherInfo.objects.all()
+    serializer_class = WeatherValueSerializer
+    permission_classes = [AllowAny]
 # Create your views here.
