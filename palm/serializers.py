@@ -44,8 +44,16 @@ class RegisterFarmSerializer(serializers.Serializer):
 class SensorValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = SensorInfoOrValue
-        # fields = '__all__'
-        fields = ['temp_mean', 'humd_mean', 'co2_mean', 'soil_temp_mean', 'soil_humd_mean','soil_ec_mean', 'culture_medium_temp_mean','nutrient_solution_ec_mean','nutrient_solution_ph_mean', 'test_date']
+        fields = ['temp_value1', 'temp_value2', 'temp_value3', 'temp_mean',
+                  'humd_value1', 'humd_value3', 'humd_value3', 'humd_mean',
+                  'co2_value1', 'co2_value2', 'co2_value3', 'co2_mean',
+                  'soil_temp_value1', 'soil_temp_value2', 'soil_temp_value3', 'soil_temp_mean',
+                  'soil_humd_value1', 'soil_humd_value2', 'soil_humd_value3', 'soil_humd_mean',
+                  'soil_ec_value1', 'soil_ec_value2', 'soil_ec_value3', 'soil_ec_mean',
+                  'culture_medium_temp_value1', 'culture_medium_temp_value2', 'culture_medium_temp_value3', 'culture_medium_temp_mean',
+                  'nutrient_solution_ec_value1', 'nutrient_solution_ec_value2', 'nutrient_solution_ec_value3', 'nutrient_solution_ec_mean',
+                  'nutrient_solution_ph_value1', 'nutrient_solution_ph_value2', 'nutrient_solution_ph_value3', 'nutrient_solution_ph_mean',
+                  'test_date']
 class WeatherValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = WeatherInfo

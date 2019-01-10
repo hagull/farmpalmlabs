@@ -4,8 +4,6 @@
     <list default="true" id="42feb66e-6843-4ae1-ba65-ed56bb524b1a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/palm/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/palm/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/palm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/palm/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/palm/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/palm/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/palm/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/palm/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/palm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/palm/views.py" afterDir="false" />
@@ -23,20 +21,17 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/palm/serializers.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="176">
-                  <caret line="53" column="30" selection-start-line="53" selection-start-column="30" selection-end-line="53" selection-end-column="30" />
-                  <folding>
-                    <element signature="e#0#37#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="114">
+                  <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/palm/views.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="91">
-                  <caret line="153" column="44" selection-start-line="153" selection-start-column="44" selection-end-line="153" selection-end-column="44" />
+                <state relative-caret-position="171">
+                  <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
                   <folding>
                     <element signature="e#0#54#0" expanded="true" />
                   </folding>
@@ -47,8 +42,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/palm/urls.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="171">
-                  <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+                <state relative-caret-position="76">
+                  <caret line="4" column="36" lean-forward="true" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
                   <folding>
                     <element signature="e#0#46#0" expanded="true" />
                   </folding>
@@ -56,11 +51,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/palm/admin.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="209">
-                  <caret line="22" column="8" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+                <state relative-caret-position="152">
+                  <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
                   <folding>
                     <element signature="e#0#32#0" expanded="true" />
                   </folding>
@@ -71,38 +66,14 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/palm/views.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="95">
-                  <caret line="117" column="49" selection-start-line="117" selection-start-column="49" selection-end-line="117" selection-end-column="49" />
-                  <folding>
-                    <element signature="e#0#54#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
+        <leaf>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/palm/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="100">
-                  <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
+                <state relative-caret-position="209">
+                  <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
                   <folding>
                     <element signature="e#0#28#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/palm/serializers.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="81">
-                  <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
-                  <folding>
-                    <element signature="e#0#37#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -127,12 +98,24 @@
       <find>jwt</find>
       <find>decor</find>
       <find>User</find>
-      <find>Farm</find>
       <find>cus</find>
       <find>passwordatfind</find>
       <find>datetime</find>
       <find>aver</find>
       <find>Sensor</find>
+      <find>get_query</find>
+      <find>cultru</find>
+      <find>soil_tempvalue</find>
+      <find>soil_tempvalue1</find>
+      <find>get_object</find>
+      <find>set_password</find>
+      <find>Weather</find>
+      <find>Weathe</find>
+      <find>Weath</find>
+      <find>Farm</find>
+      <find>Password</find>
+      <find>FindPa</find>
+      <find>Set</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -149,11 +132,11 @@
         <option value="$PROJECT_DIR$/palm/test.py" />
         <option value="$PROJECT_DIR$/accounts/models.py" />
         <option value="$PROJECT_DIR$/farm/settings.py" />
+        <option value="$PROJECT_DIR$/palm/admin.py" />
+        <option value="$PROJECT_DIR$/palm/models.py" />
         <option value="$PROJECT_DIR$/palm/serializers.py" />
         <option value="$PROJECT_DIR$/palm/urls.py" />
         <option value="$PROJECT_DIR$/palm/views.py" />
-        <option value="$PROJECT_DIR$/palm/admin.py" />
-        <option value="$PROJECT_DIR$/palm/models.py" />
       </list>
     </option>
   </component>
@@ -170,7 +153,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -203,6 +185,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -358,13 +341,21 @@
       <option name="project" value="LOCAL" />
       <updated>1546967368189</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="model수정 - add display field &#10;and sensor value api - temp">
+      <created>1547024955072</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1547024955072</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="697" height="735" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25588697" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2747253" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -420,7 +411,8 @@
     <MESSAGE value="farm register - finish" />
     <MESSAGE value="model 수정 - ControlNormalOption 분리" />
     <MESSAGE value="model수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="model수정" />
+    <MESSAGE value="model수정 - add display field &#10;and sensor value api - temp" />
+    <option name="LAST_COMMIT_MESSAGE" value="model수정 - add display field &#10;and sensor value api - temp" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/accounts/views.py">
@@ -490,16 +482,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/farm/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="27" column="53" selection-start-line="27" selection-start-column="53" selection-end-line="27" selection-end-column="53" />
-          <folding>
-            <element signature="e#628#660#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/accounts/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -523,52 +505,59 @@
     <entry file="file://$PROJECT_DIR$/palm/migrations/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/palm/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/palm/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="117" column="49" selection-start-line="117" selection-start-column="49" selection-end-line="117" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/palm/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/palm/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="22" column="8" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+        <state relative-caret-position="152">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/farm/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="26" column="44" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
+          <folding>
+            <element signature="e#628#660#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/palm/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
+        <state relative-caret-position="209">
+          <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/palm/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/palm/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="36" lean-forward="true" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/palm/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
