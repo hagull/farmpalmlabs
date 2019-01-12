@@ -14,6 +14,7 @@ urlpatterns = [
     path('sms-api/', SMSPasscodeView.as_view()),
     path('farm-register/', RegisterFarmView.as_view()),
     path('sensor-value/', SensorValueView.as_view()),
-    path('farm-num/', FarmNumber.as_view()),
+    path('farm-num/', FarmNumberView.as_view()),
     path('weather-value/', WeatherValueView.as_view()),
+    path('protocol-processing/<str:protocol>/', ProtocolView.as_view()),
 ]

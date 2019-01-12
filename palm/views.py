@@ -16,6 +16,13 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from statistics import mean
+from palm.ap_processing import *
+
+def convert_to_time(input_date):
+    minute = input_date.minute
+    minute = (minute//5)*5
+    replace_date = input_date.replace(minute=minute, second=0, microsecond=0)
+    return replace_date
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -462,7 +469,7 @@ class SensorValueView(APIView):
         data.append(value_max_min_mean)
         return Response(data=data, status=status.HTTP_200_OK)
 
-class FarmNumber(APIView):
+class FarmNumberView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     def get_object(self, request):
@@ -479,5 +486,31 @@ class FarmNumber(APIView):
             response_data.append({'farm{}_group_number'.format(j):control_group_number})
             j += 1
         return Response(data=response_data, status=status.HTTP_200_OK)
+class ProtocolView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, protocol):
+        protocol = protocol
+        ap3_2 = AP3_2(protocol=protocol)
+        list_data = None
+        if ap3_2.command_type =='06':
+            ap3_2 = AP3_2_SERVICE(protocol=protocol)
+            if ap3_2.payload_type =='01':
+                gcg_id = ap3_2.gcg
+                gcg = Gcg.objects.get(serial_num = gcg_id)
+                list_data = ap3_2.message_receive()
+                for i in list_data:
+                    control_group_name = i.pop('control_group_name')
+                    control_group = ControlGroup.objects.get(gcg=gcg, name=control_group_name)
+                    sensor_value = SensorInfoOrValue.objects.create(control_group=control_group, **i)
+                    sensor_value.test_date = convert_to_time(sensor_value.test_date)
+                    if sensor_value.test_date.minute == 0:
+                        sensor_value.display_data = True
+                    sensor_value.save()
+            else:
+                pass
+        else:
+            pass
+        return Response(data=list_data, status=status.HTTP_200_OK)
 
 # Create your views here.

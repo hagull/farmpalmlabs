@@ -60,3 +60,5 @@ class WeatherValueSerializer(serializers.ModelSerializer):
         fields = ['rain_value', 'temp_value', 'humd_value',
                   'wind_dir_value', 'wind_spd_value',
                   'test_date']
+class ProtocolSerializer(serializers.Serializer):
+    pass

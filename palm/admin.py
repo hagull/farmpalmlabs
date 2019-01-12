@@ -19,6 +19,9 @@ class ControlOpenGroupAdmin(admin.ModelAdmin):
 class SensorInfoOrValueAdmin(admin.ModelAdmin):
     pass
 @admin.register(models.WeatherInfo)
-class WeatherInfo(admin.ModelAdmin):
+class WeatherInfoAdmin(admin.ModelAdmin):
+    pass
+@admin.register(models.TestModel)
+class TestModelAdmin(admin.ModelAdmin):
     pass
 # Register your models here.

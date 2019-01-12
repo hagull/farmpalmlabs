@@ -210,7 +210,7 @@ class SensorInfoOrValue(models.Model):
     culture_medium_temp_num = models.IntegerField(default=0)
     culture_medium_temp_id1 = models.CharField(max_length=6, default='0000')
     culture_medium_temp_id2 = models.CharField(max_length=6, default='0000')
-    cultrue_medium_temp_id3 = models.CharField(max_length=6, default='0000')
+    culture_medium_temp_id3 = models.CharField(max_length=6, default='0000')
     # culture_medium_temp_value
     culture_medium_temp_value1 = models.FloatField(default=0)
     culture_medium_temp_value2 = models.FloatField(default=0)
@@ -237,7 +237,7 @@ class SensorInfoOrValue(models.Model):
     nutrient_solution_ph_value3 = models.FloatField(default=0)
     nutrient_solution_ph_mean = models.FloatField()
 
-    test_date = models.DateTimeField(blank=True)
+    test_date = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now_add=True)
     display_data = models.BooleanField(default=False)
     def __str__(self):
@@ -261,3 +261,8 @@ class WeatherInfo(models.Model):
 class SMSPassCode(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     passcode = models.CharField(max_length=10)
+
+class TestModel(models.Model):
+    test_date1 = models.DateTimeField(auto_now_add=True)
+    test_date2 = models.DateTimeField(auto_now_add=True)
+    display_data = models.BooleanField(default=False)
