@@ -202,6 +202,76 @@ class AP3_2:
         self.gcg = self.protocol[10:18] # 4byte
         self.command_type = self.protocol[18:20] # 1byte
         self.payload_type = self.protocol[20:22] # 1byte
+# command_type 0x01
+
+class AP3_2_GCG(AP3_2):
+    def __init__(self, protocol):
+        super().__init__(protocol)
+        if self.payload_type =='01':
+            self.value1 = self.protocol[22:24]
+            self.value2 = self.protocol[24:]
+        elif self.payload_type =='02':
+            self.value1 = self.protocol[22:24]
+            if self.value1 =='01':
+                self.value2 = self.protocol[24:32]
+                self.value3 = self.protocol[32:34]
+            elif self.value1 =='02':
+                self.value2 = self.protocol[24:36]
+                self.value3 = self.protocol[36:38]
+            elif self.value1 =='03':
+                self.value2 = self.protocol[24:30]
+                self.value3 = self.protocol[30:32]
+    # payload_type 0x01
+    def gcg_info(self):
+        if self.value1 =='01':
+            # value2를 쪼개서 GCG 정보에 대한 사전객체로 반환 - 이를 서버에서 처리하여 저장
+            pass
+        else:
+            pass
+        pass
+    # payload_type 0x02
+    def gcg_set(self):
+        if self.value1 == '01':
+            # gcg_id 수정요청
+            # value2 : 수정할 gcg_id값
+            # value3 : 수정성공여부
+            pass
+        elif self.value1 =='02':
+            # 서버 ip 주소 수정요청
+            # value2 : 수정할 서버 ip 주소값
+            # value3 : 수정성공여부
+            pass
+        elif self.value1 =='03':
+            # 센싱 주기 수정요청
+            # value2 : 수정할 센싱주기 값
+            # value3 : 수정성공여부
+            pass
+class AP3_2_NODE(AP3_2):
+    def __init__(self, protocol):
+        super().__init__(protocol)
+        if self.payload_type =='01':
+            self.value1 = protocol[22:24]
+            self.value2 = protocol[24:26]
+            value2_num = int(self.value2, 16)
+            value = protocol[26:]
+            if (self.value2 == 'ff') | (self.value2=='FF'):
+                pass
+            else:
+                value3 = []
+                temp_value = value[:2]
+                next_value = value[2:]
+                for i in range(value2_num):
+                    value3.append(temp_value)
+                    temp_value3 = next_value[:2]
+                    next_value3 = next_value[2:]
+            # value4 = next_value[]
+        elif self.payload_type=='02':
+            pass
+        elif self.payload_type=='03':
+            pass
+        elif self.payload_type=='04':
+            pass
+
 class AP3_2_SERVICE(AP3_2):
     def __init__(self, protocol):
         super().__init__(protocol)
