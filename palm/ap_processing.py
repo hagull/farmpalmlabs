@@ -202,8 +202,8 @@ class AP3_2:
         self.gcg = self.protocol[10:18] # 4byte
         self.command_type = self.protocol[18:20] # 1byte
         self.payload_type = self.protocol[20:22] # 1byte
-# command_type 0x01
 
+# command_type 0x01
 class AP3_2_GCG(AP3_2):
     def __init__(self, protocol):
         super().__init__(protocol)

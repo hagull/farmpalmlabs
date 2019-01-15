@@ -237,7 +237,7 @@ class SensorInfoOrValue(models.Model):
     nutrient_solution_ph_value3 = models.FloatField(default=0)
     nutrient_solution_ph_mean = models.FloatField()
 
-    test_date = models.DateTimeField(auto_now_add=True)
+    display_date = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now_add=True)
     display_data = models.BooleanField(default=False)
     def __str__(self):
@@ -255,13 +255,12 @@ class WeatherInfo(models.Model):
     humd_value = models.FloatField()
     wind_dir_value = models.CharField(max_length=50)
     wind_spd_value = models.FloatField()
-    test_date = models.DateTimeField(blank=True)
+    display_date = models.DateTimeField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 # Sms passcode model
 class SMSPassCode(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     passcode = models.CharField(max_length=10)
-
 class TestModel(models.Model):
     test_date1 = models.DateTimeField(auto_now_add=True)
     test_date2 = models.DateTimeField(auto_now_add=True)
