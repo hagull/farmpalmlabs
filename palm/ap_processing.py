@@ -1,7 +1,8 @@
 # palm/ap_processing.py
 # ap 처리를 위한 모듈을 저장하는 공간
 import struct
-import datetime
+
+
 # AP3_1 Processing
 def str_to_float(str_value):
     step1 = [int(str_value[6:8], 16), int(str_value[4:6], 16), int(str_value[2:4], 16), int(str_value[:2], 16)]
@@ -10,6 +11,8 @@ def str_to_float(str_value):
     step4 = step3[0]
     step5 = round(step4, 3)
     return step5
+
+
 class AP3_1:
     def __init__(self, command_type = 0, version = 1, frame_type = 0, security = 0, sequence_number = 0):
         self.frame_header = '0x'

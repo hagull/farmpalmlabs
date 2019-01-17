@@ -53,12 +53,13 @@ class SensorValueSerializer(serializers.ModelSerializer):
                   'culture_medium_temp_value1', 'culture_medium_temp_value2', 'culture_medium_temp_value3', 'culture_medium_temp_mean',
                   'nutrient_solution_ec_value1', 'nutrient_solution_ec_value2', 'nutrient_solution_ec_value3', 'nutrient_solution_ec_mean',
                   'nutrient_solution_ph_value1', 'nutrient_solution_ph_value2', 'nutrient_solution_ph_value3', 'nutrient_solution_ph_mean',
-                  'test_date']
+                  'display_date']
 class WeatherValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = WeatherInfo
         fields = ['rain_value', 'temp_value', 'humd_value',
                   'wind_dir_value', 'wind_spd_value',
-                  'test_date']
+                  'display_date']
+
 class ProtocolSerializer(serializers.Serializer):
     pass

@@ -1,16 +1,17 @@
 from django.db import models
 from django.conf import settings
-import datetime
-from django.utils.timezone import now, make_aware
 # Create your models here.
+
 
 class Farm(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     vegetable_type = models.CharField(max_length=100)
     farm_area = models.IntegerField()
-    farm_type1 = models.CharField(max_length=10) # N 농
-    farm_type2 = models.CharField(max_length=10) # M 중
-    farm_house_num = models.CharField(max_length=10) # L 동
+    farm_type1 = models.CharField(max_length=10)  # N 농
+    farm_type2 = models.CharField(max_length=10)  # M 중
+    farm_house_num = models.CharField(max_length=10)  # L 동
+
+
 # Gcg Info 모델
 class Gcg(models.Model):
     STATE_TYPE = (
@@ -28,13 +29,17 @@ class Gcg(models.Model):
     state = models.CharField(choices=STATE_TYPE, max_length=2, blank=True)
     snode_num = models.IntegerField(default=0)
     anode_num = models.IntegerField(default=0)
+
+
 # 제어그룹 모델 - 한개 Gcg당 최대 16개 지정가능
 class ControlGroup(models.Model):
     gcg = models.ForeignKey('Gcg', on_delete=models.PROTECT)
     num = models.IntegerField(default=0)
-    name = models.IntegerField() # N 동
+    name = models.IntegerField()  # N 동
     # 개폐기 옵션에 제어그룹 외래키 부여
     # 센서 인포 ( 센서 value ) 에 제어그룹 외래키 부여
+
+
 # 개폐제어 정보 - 한개 제어그룹당 개폐기 그룹은 8개 / auto 그룹은 6개 존재
 class ControlOpenOption(models.Model):
     MODE_TYPE = (
@@ -55,22 +60,24 @@ class ControlOpenOption(models.Model):
     og_num = models.IntegerField(default=0)
     # open_motor_option - om_option
     om_mode = models.CharField(choices=MODE_TYPE, max_length=2, blank=True)
-    om_delay_time = models.IntegerField(default=0) # 단위 : 초
+    om_delay_time = models.IntegerField(default=0)  # 단위 : 초
     om_open_sequence = models.CharField(choices=SEQUENCE_TYPE, max_length=2, blank=True)
     om_close_sequence = models.CharField(choices=SEQUENCE_TYPE, max_length=2, blank=True)
     om_rain_mode = models.CharField(choices=ACTIVATE_TYPE, max_length=2, blank=True)
-    om_rain_option = models.IntegerField(default=0) # 단위 : 분
+    om_rain_option = models.IntegerField(default=0)  # 단위 : 분
     om_high_temp_mode = models.CharField(choices=ACTIVATE_TYPE, max_length=2, blank=True)
-    om_high_temp_option = models.IntegerField(default=0) # 단위 : 섭씨
-        # om_auto_group에 개폐기 옵션 외래키 부여
-# open_control 그룹으로 한개 option에 최대 8개의 그룹등록가능
+    om_high_temp_option = models.IntegerField(default=0)  # 단위 : 섭씨
+    # om_auto_group에 개폐기 옵션 외래키 부여
+
+
+# open_control 그룹으로 한개 option 에 최대 8개의 그룹등록가능
 class ControlOpenGroup(models.Model):
     ACTIVATE_TYPE = (
         ('01', '활성화'),
         ('02', '비활성화'),
     )
     control_group = models.ForeignKey('ControlGroup', on_delete=models.PROTECT)
-    og_name = models.IntegerField(default=0) # 개폐기 그룹번호
+    og_name = models.IntegerField(default=0)  # 개폐기 그룹번호
     og_custom_name = models.CharField(max_length=50)
     og_mode = models.CharField(choices=ACTIVATE_TYPE, max_length=2, blank=True)
     og_lm_tot = models.IntegerField(default=0)
@@ -83,6 +90,8 @@ class ControlOpenGroup(models.Model):
     og_rm_id = models.CharField(max_length=6, blank=True)
     og_rm_state = models.CharField(max_length=50)
     og_rm_option = models.CharField(max_length=50)
+
+
 # open_control 주기 그룹으로 한개 option에 최대 6개의 주기그룹 등록가능
 class ControlOpenAutoGroup(models.Model):
     ACTIVATE_TYPE = (
@@ -96,7 +105,8 @@ class ControlOpenAutoGroup(models.Model):
     om_etime = models.CharField(max_length=4)
     om_otemp = models.FloatField()
     om_ctemp = models.FloatField()
-# normal_control_option 모델로 1개의 제어그룹에 최대 1개 등록될수있다.
+
+
 class ControlFMotorOption(models.Model):
     MODE_TYPE = (
         ('01', '자동'),
@@ -106,12 +116,14 @@ class ControlFMotorOption(models.Model):
     # flow_motor_option - fm_option
     fm_id = models.CharField(max_length=6)
     fm_op_mode = models.CharField(choices=MODE_TYPE, max_length=2)
-    fm_stime = models.CharField(max_length=4) # 이하 start time
-    fm_etime = models.CharField(max_length=4) # 이하 end time
-    fm_stemp = models.FloatField() # 이하 start temp
-    fm_etemp = models.FloatField() # 이하 end temp
-    fm_op_time = models.IntegerField() # 단위 : 분
-    fm_bk_time = models.IntegerField() # 단위 : 분
+    fm_stime = models.CharField(max_length=4)  # 이하 start time
+    fm_etime = models.CharField(max_length=4)  # 이하 end time
+    fm_stemp = models.FloatField()  # 이하 start temp
+    fm_etemp = models.FloatField()  # 이하 end temp
+    fm_op_time = models.IntegerField()  # 단위 : 분
+    fm_bk_time = models.IntegerField()  # 단위 : 분
+
+
 class ControlVMotorOption(models.Model):
     MODE_TYPE = (
         ('01', '자동'),
@@ -127,6 +139,8 @@ class ControlVMotorOption(models.Model):
     vm_etemp = models.FloatField()  # 이하 end temp
     vm_op_time = models.IntegerField()  # 단위 : 분
     vm_bk_time = models.IntegerField()  # 단위 : 분
+
+
 class ControlEtcOption(models.Model):
     MODE_TYPE = (
         ('01', '자동'),
@@ -143,6 +157,7 @@ class ControlEtcOption(models.Model):
     ea_etemp = models.FloatField()  # 이하 end temp
     ea_op_time = models.IntegerField()  # 단위 : 분
     ea_bk_time = models.IntegerField()  # 단위 : 분
+
 
 class SensorInfoOrValue(models.Model):
     control_group = models.ForeignKey('ControlGroup', on_delete=models.PROTECT)
@@ -240,8 +255,10 @@ class SensorInfoOrValue(models.Model):
     display_date = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now_add=True)
     display_data = models.BooleanField(default=False)
+
     def __str__(self):
-        return 'Date:{}/Display:{}'.format(self.test_date.strftime('%m.%d %H:%M'), self.display_data)
+        return 'Date:{}/Display:{}'.format(self.display_date.strftime('%m.%d %H:%M'), self.display_data)
+
 
 # 외부기상 info - Gcg에서 외래키 받아옴
 class WeatherInfo(models.Model):
@@ -257,10 +274,14 @@ class WeatherInfo(models.Model):
     wind_spd_value = models.FloatField()
     display_date = models.DateTimeField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
 # Sms passcode model
 class SMSPassCode(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     passcode = models.CharField(max_length=10)
+
+
 class TestModel(models.Model):
     test_date1 = models.DateTimeField(auto_now_add=True)
     test_date2 = models.DateTimeField(auto_now_add=True)
